@@ -1,0 +1,24 @@
+{
+  "lastname": "Ouedrhiri",
+  "firstname": "Mohammed",
+  "email": "mouedrhiri492@gmail.com",
+  "phone": "0775446645",
+  "cv_path": "C:\\Users\\mouedrhiri\\Documents\\Alternance\\CV_Mohammed_OUEDRHIRI.pdf",
+  "message_template": "Bonjour,\n\nJe suis actuellement à la recherche d'une alternance dans le domaine du développement web. Après avoir découvert {company} \nsur La Bonne Alternance, votre entreprise m'a particulièrement intéressé et je souhaite vous adresser ma candidature spontanée.\n\nJe suis actuellement étudiant en Mastère Expert Développement Full Stack chez Ynov Campus. Mon stage chez Assystem m'a donné \nl'opportunité de travailler en tant que développeur Fullstack avec une forte composante DevOps. J'ai développé le backend en Java \net Spring Boot, créé des interfaces frontend avec Angular et Vue.js, et j'ai participé à la mise en place des pipelines CI/CD avec \nGitLab CI, la conteneurisation Docker, l'orchestration Kubernetes et l'Infrastructure as Code avec Terraform. Chez LS2N, j'ai conçu \ndes pipelines Python complexes et développé des API FastAPI, ce qui m'a donné une bonne compréhension de comment déployer et maintenir \nune application en production.\n\nJe maîtrise l'ensemble de la chaîne Fullstack : sur le backend je travaille avec Java Spring Boot, Python FastAPI et Node.js pour \nconcevoir des API REST robustes et gérer les données avec PostgreSQL, MySQL et MongoDB. Sur le frontend, j'utilise React.js, Angular \net Vue.js pour créer des interfaces performantes. Mes expériences chez Benaaz.com et RA2E m'ont permis de développer des applications \ncomplètes en React.js et React Native.\n\nCe qui me différencie vraiment, c'est aussi mon expertise en DevOps. Je ne suis pas juste un développeur qui connaît Docker, \nje maîtrise Docker, Kubernetes, Terraform et les pipelines CI/CD. J'ai configuré du monitoring avec Prometheus et Grafana, \net je comprends comment livrer et maintenir une application en production. Cette combinaison Fullstack et DevOps me permet de \nconstruire des applications en pensant à leur déploiement dès le départ.\n\nJe suis motivé, curieux techniquement et rigoureux sur la qualité. Je travaille naturellement dans un environnement Agile, \nj'utilise les tests unitaires et d'intégration pour fiabiliser mes développements, et j'accorde de l'importance à la performance \net à la fiabilité. Je suis disponible pour un entretien à votre convenance et je suis convaincu que mon profil peut apporter une \nréelle contribution à votre équipe.\n\nCordialement,\n{firstname} {lastname}",
+  "delay_between_applications": 3,
+  "headless": false,
+  "selected_cities": [
+    "Strasbourg",
+    "Nantes",
+    "Lyon",
+    "Metz",
+    "Nancy",
+    "Marseille"
+  ],
+  "job_searches": [
+    {
+      "name": "Développement web, intégration",
+      "romes": "M1805,M1855,M1825,M1834,M1861,E1210,E1405,M1865,M1877,M1886,M1887"
+    }
+  ]
+}

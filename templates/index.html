@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Automatisation LBA — Candidatures Spontanées</title>
+  <style>
+    /* ── Reset & base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #f4f5f7; color: #1b1b35; min-height: 100vh; }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, #000091 0%, #1212ff 100%);
+      color: #fff; padding: 18px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    }
+    header h1 { font-size: 1.35rem; font-weight: 700; letter-spacing: .3px; }
+    header span.sub { font-size: .85rem; opacity: .8; margin-left: 12px; }
+    #status-badge {
+      padding: 5px 14px; border-radius: 20px; font-size: .8rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .5px;
+    }
+    .badge-stopped  { background: #6b7280; color: #fff; }
+    .badge-running  { background: #16a34a; color: #fff; animation: pulse 2s infinite; }
+    .badge-stopping { background: #d97706; color: #fff; }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.6; } }
+
+    /* ── Tabs ── */
+    nav.tabs { display: flex; background: #fff; border-bottom: 2px solid #e5e7eb; padding: 0 24px; }
+    nav.tabs button {
+      padding: 13px 22px; border: none; background: transparent;
+      font-size: .95rem; font-weight: 500; cursor: pointer; color: #6b7280;
+      border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all .15s;
+    }
+    nav.tabs button.active { color: #000091; border-bottom-color: #000091; font-weight: 700; }
+    nav.tabs button:hover:not(.active) { color: #1b1b35; }
+
+    /* ── Tab panels ── */
+    .tab-panel { display: none; padding: 28px 32px; }
+    .tab-panel.active { display: block; }
+
+    /* ── Grid layout ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ── Cards ── */
+    .card {
+      background: #fff; border-radius: 10px; padding: 22px 24px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08); margin-bottom: 20px;
+    }
+    .card h2 { font-size: 1rem; font-weight: 700; margin-bottom: 16px;
+               color: #000091; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; }
+
+    /* ── Form fields ── */
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .form-row.single { grid-template-columns: 1fr; }
+    label { display: block; font-size: .82rem; font-weight: 600; color: #374151; margin-bottom: 5px; }
+    input[type="text"], input[type="email"], input[type="tel"], input[type="number"],
+    textarea, select {
+      width: 100%; padding: 9px 12px; border: 1.5px solid #d1d5db; border-radius: 6px;
+      font-size: .93rem; color: #1b1b35; transition: border-color .15s;
+      background: #fafafa;
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none; border-color: #000091; background: #fff;
+      box-shadow: 0 0 0 3px rgba(0,0,145,.09);
+    }
+    textarea { resize: vertical; min-height: 110px; }
+
+    /* ── City checkboxes ── */
+    .city-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .city-check { display: flex; align-items: center; gap: 8px; font-size: .9rem;
+                  background: #f9fafb; border: 1.5px solid #e5e7eb; border-radius: 8px;
+                  padding: 8px 12px; cursor: pointer; transition: all .15s; }
+    .city-check:hover { border-color: #000091; background: #eff6ff; }
+    .city-check input[type="checkbox"] { accent-color: #000091; width: 16px; height: 16px; cursor: pointer; }
+    .city-check.checked { border-color: #000091; background: #eff6ff; color: #000091; font-weight: 600; }
+
+    /* ── Job searches table ── */
+    .job-list { display: flex; flex-direction: column; gap: 10px; }
+    .job-item {
+      display: flex; align-items: center; gap: 10px;
+      background: #f9fafb; border: 1.5px solid #e5e7eb; border-radius: 8px; padding: 10px 14px;
+    }
+    .job-item input[type="text"] { flex: 1; }
+    .job-item .rome-input { flex: 1.5; font-size: .8rem; color: #6b7280; }
+    .job-item button { background: #fee2e2; color: #dc2626; border: none; border-radius: 6px;
+                       padding: 5px 10px; cursor: pointer; font-size: .85rem; font-weight: 600; }
+    .job-item button:hover { background: #fca5a5; }
+    #btn-add-job {
+      margin-top: 10px; background: #eff6ff; color: #000091; border: 1.5px dashed #000091;
+      border-radius: 8px; padding: 9px; font-size: .9rem; font-weight: 600;
+      cursor: pointer; width: 100%; transition: background .15s;
+    }
+    #btn-add-job:hover { background: #dbeafe; }
+
+    /* ── Buttons ── */
+    .btn { padding: 11px 22px; border-radius: 8px; border: none; font-size: .95rem;
+           font-weight: 700; cursor: pointer; transition: all .15s; }
+    .btn-primary { background: #000091; color: #fff; }
+    .btn-primary:hover { background: #1212ff; }
+    .btn-primary:disabled { background: #9ca3af; cursor: not-allowed; }
+    .btn-danger  { background: #dc2626; color: #fff; }
+    .btn-danger:hover  { background: #b91c1c; }
+    .btn-danger:disabled  { background: #9ca3af; cursor: not-allowed; }
+    .btn-secondary { background: #e5e7eb; color: #374151; }
+    .btn-secondary:hover { background: #d1d5db; }
+    .btn-warning { background: #f59e0b; color: #fff; }
+    .btn-warning:hover { background: #d97706; }
+
+    /* ── Stats strip ── */
+    .stats-strip { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+    .stat-box {
+      flex: 1; min-width: 120px; background: #fff; border-radius: 10px;
+      padding: 16px 20px; text-align: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+    }
+    .stat-box .val { font-size: 1.8rem; font-weight: 800; }
+    .stat-box .lbl { font-size: .78rem; color: #6b7280; font-weight: 500; margin-top: 2px; }
+    .stat-sent  .val { color: #16a34a; }
+    .stat-skip  .val { color: #d97706; }
+    .stat-err   .val { color: #dc2626; }
+
+    /* ── Current operation ── */
+    .current-op {
+      background: #eff6ff; border: 1.5px solid #bfdbfe; border-radius: 8px;
+      padding: 12px 16px; font-size: .88rem; margin-bottom: 16px; display: flex;
+      align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+    .current-op .pill {
+      background: #000091; color: #fff; border-radius: 20px;
+      padding: 3px 12px; font-size: .78rem; font-weight: 600;
+    }
+
+    /* ── Log area ── */
+    #log-container {
+      background: #0f172a; border-radius: 10px; padding: 14px;
+      height: 380px; overflow-y: auto; font-family: 'Consolas', 'Courier New', monospace;
+      font-size: .82rem; line-height: 1.55;
+    }
+    .log-line { white-space: pre-wrap; padding: 1px 0; }
+    .log-info    { color: #94a3b8; }
+    .log-success { color: #4ade80; }
+    .log-warning { color: #fbbf24; }
+    .log-error   { color: #f87171; }
+
+    /* ── Controls row ── */
+    .controls { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
+    .controls-separator { flex: 1; }
+
+    /* ── History table ── */
+    .tbl-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+    th { text-align: left; padding: 10px 14px; background: #f3f4f6;
+         font-weight: 700; color: #374151; border-bottom: 2px solid #e5e7eb; }
+    td { padding: 9px 14px; border-bottom: 1px solid #f3f4f6; }
+    tr:hover td { background: #fafafa; }
+    .tag-sent { background: #dcfce7; color: #166534; padding: 2px 9px; border-radius: 20px;
+                font-size: .75rem; font-weight: 700; }
+
+    /* ── Toast ── */
+    #toast {
+      position: fixed; bottom: 24px; right: 24px; background: #1b1b35; color: #fff;
+      padding: 13px 20px; border-radius: 9px; font-size: .9rem; font-weight: 500;
+      box-shadow: 0 4px 16px rgba(0,0,0,.3); opacity: 0; transition: opacity .3s;
+      z-index: 9999;
+    }
+    #toast.show { opacity: 1; }
+
+    /* ── Save notice ── */
+    .save-row { display: flex; justify-content: flex-end; margin-top: 8px; }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header>
+  <div>
+    <h1>🤖 Automatisation LBA <span class="sub">La Bonne Alternance — Candidatures Spontanées</span></h1>
+  </div>
+  <div id="status-badge" class="badge-stopped">Arrêté</div>
+</header>
+
+<!-- ── Tabs ── -->
+<nav class="tabs">
+  <button class="active" onclick="showTab('config')">⚙️ Configuration</button>
+  <button onclick="showTab('auto')">▶️ Automatisation</button>
+  <button onclick="showTab('history')">📋 Historique</button>
+</nav>
+
+<!-- ════════════════════════════════════════════════════════════
+     TAB 1 — CONFIGURATION
+════════════════════════════════════════════════════════════ -->
+<div id="tab-config" class="tab-panel active">
+  <div class="two-col">
+
+    <!-- Left column -->
+    <div>
+
+      <!-- Personal info -->
+      <div class="card">
+        <h2>👤 Informations personnelles</h2>
+        <div class="form-row">
+          <div>
+            <label for="f-lastname">Nom</label>
+            <input type="text" id="f-lastname" placeholder="Dupont" />
+          </div>
+          <div>
+            <label for="f-firstname">Prénom</label>
+            <input type="text" id="f-firstname" placeholder="Marie" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label for="f-email">E-mail</label>
+            <input type="email" id="f-email" placeholder="marie.dupont@email.fr" />
+          </div>
+          <div>
+            <label for="f-phone">Téléphone</label>
+            <input type="tel" id="f-phone" placeholder="0612345678" />
+          </div>
+        </div>
+        <div class="form-row single">
+          <div>
+            <label for="f-cv">Chemin vers votre CV (PDF ou DOCX)</label>
+            <input type="text" id="f-cv" placeholder="C:\Users\VotreNom\Documents\CV.pdf" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Message template -->
+      <div class="card">
+        <h2>✉️ Message de motivation (template)</h2>
+        <p style="font-size:.82rem;color:#6b7280;margin-bottom:10px;">
+          Utilisez <code>{company}</code>, <code>{firstname}</code>, <code>{lastname}</code> comme variables.
+        </p>
+        <textarea id="f-message" rows="8"></textarea>
+      </div>
+
+      <!-- Settings -->
+      <div class="card">
+        <h2>🔧 Paramètres</h2>
+        <div class="form-row">
+          <div>
+            <label for="f-delay">Délai entre candidatures (secondes)</label>
+            <input type="number" id="f-delay" value="3" min="1" max="30" />
+          </div>
+          <div style="display:flex;align-items:flex-end;padding-bottom:2px;">
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:.9rem;">
+              <input type="checkbox" id="f-headless" style="accent-color:#000091;width:18px;height:18px;" />
+              Mode sans fenêtre (headless)
+            </label>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /left -->
+
+    <!-- Right column -->
+    <div>
+
+      <!-- Cities -->
+      <div class="card">
+        <h2>📍 Villes</h2>
+        <div class="city-grid" id="city-grid">
+          <!-- populated by JS -->
+        </div>
+      </div>
+
+      <!-- Job searches -->
+      <div class="card">
+        <h2>🔍 Recherches métier</h2>
+        <p style="font-size:.82rem;color:#6b7280;margin-bottom:12px;">
+          Chaque ligne correspond à une recherche sur LBA. Les codes ROME séparent les métiers associés.
+        </p>
+        <div class="job-list" id="job-list"></div>
+        <button id="btn-add-job" onclick="addJob()">+ Ajouter un métier</button>
+      </div>
+
+    </div><!-- /right -->
+  </div>
+
+  <div class="save-row">
+    <button class="btn btn-primary" onclick="saveConfig()">💾 Enregistrer la configuration</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     TAB 2 — AUTOMATISATION
+════════════════════════════════════════════════════════════ -->
+<div id="tab-auto" class="tab-panel">
+
+  <!-- Stats -->
+  <div class="stats-strip">
+    <div class="stat-box stat-sent">
+      <div class="val" id="st-sent">0</div>
+      <div class="lbl">✅ Envoyées</div>
+    </div>
+    <div class="stat-box stat-skip">
+      <div class="val" id="st-skip">0</div>
+      <div class="lbl">⏭️ Ignorées</div>
+    </div>
+    <div class="stat-box stat-err">
+      <div class="val" id="st-err">0</div>
+      <div class="lbl">❌ Erreurs</div>
+    </div>
+  </div>
+
+  <!-- Current operation -->
+  <div class="current-op" id="current-op" style="display:none;">
+    <span>En cours :</span>
+    <span class="pill" id="cur-city">—</span>
+    <span class="pill" id="cur-job">—</span>
+    <span id="cur-company" style="color:#374151;font-weight:500;font-size:.85rem;"></span>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <button class="btn btn-primary" id="btn-start" onclick="startAuto()">▶ Démarrer</button>
+    <button class="btn btn-danger" id="btn-stop" onclick="stopAuto()" disabled>⏹ Arrêter</button>
+    <div class="controls-separator"></div>
+    <button class="btn btn-warning" id="btn-schedule" onclick="scheduleAuto()">
+      ⏰ Programmer à minuit
+    </button>
+    <button class="btn btn-secondary" onclick="clearLogs()">🗑 Vider les logs</button>
+  </div>
+
+  <!-- Log panel -->
+  <div class="card" style="padding:0;overflow:hidden;">
+    <div style="padding:12px 16px;background:#1e293b;display:flex;align-items:center;justify-content:space-between;">
+      <span style="color:#94a3b8;font-size:.85rem;font-weight:600;">📟 Logs en temps réel</span>
+      <label style="color:#94a3b8;font-size:.8rem;display:flex;align-items:center;gap:6px;cursor:pointer;">
+        <input type="checkbox" id="autoscroll" checked style="accent-color:#4ade80;" />
+        Auto-scroll
+      </label>
+    </div>
+    <div id="log-container">
+      <div class="log-line log-info">Prêt. Cliquez sur ▶ Démarrer pour lancer l'automatisation.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     TAB 3 — HISTORIQUE
+════════════════════════════════════════════════════════════ -->
+<div id="tab-history" class="tab-panel">
+  <div class="card">
+    <h2>📋 Candidatures envoyées</h2>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+      <span id="hist-count" style="font-size:.9rem;color:#6b7280;">Chargement…</span>
+      <button class="btn btn-secondary" onclick="loadHistory()" style="font-size:.82rem;padding:7px 14px;">
+        🔄 Rafraîchir
+      </button>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Heure</th>
+            <th>Entreprise</th>
+            <th>SIRET</th>
+            <th>Ville</th>
+            <th>Métier</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
+        <tbody id="hist-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- ── Scripts ── -->
+<script>
+  // ── Config ──────────────────────────────────────────────────────
+  const CITIES = ["Strasbourg","Nantes","Lyon","Metz","Nancy","Marseille"];
+  let config = {};
+  let evtSource = null;
+
+  // ── Tab management ──────────────────────────────────────────────
+  function showTab(name) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('nav.tabs button').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    const btns = document.querySelectorAll('nav.tabs button');
+    const idx = { config:0, auto:1, history:2 }[name];
+    btns[idx].classList.add('active');
+    if (name === 'history') loadHistory();
+  }
+
+  // ── Toast ────────────────────────────────────────────────────────
+  function toast(msg, ms = 2800) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), ms);
+  }
+
+  // ── Render cities ────────────────────────────────────────────────
+  function renderCities(selected) {
+    const grid = document.getElementById('city-grid');
+    grid.innerHTML = '';
+    CITIES.forEach(city => {
+      const checked = selected.includes(city);
+      const label = document.createElement('label');
+      label.className = 'city-check' + (checked ? ' checked' : '');
+      label.innerHTML = `<input type="checkbox" value="${city}" ${checked ? 'checked' : ''} onchange="toggleCity(this)"> ${city}`;
+      grid.appendChild(label);
+    });
+  }
+
+  function toggleCity(cb) {
+    cb.closest('label').classList.toggle('checked', cb.checked);
+  }
+
+  function getSelectedCities() {
+    return [...document.querySelectorAll('#city-grid input[type="checkbox"]:checked')].map(c => c.value);
+  }
+
+  // ── Jobs list ────────────────────────────────────────────────────
+  function renderJobs(jobs) {
+    const list = document.getElementById('job-list');
+    list.innerHTML = '';
+    (jobs || []).forEach((j, i) => {
+      const div = document.createElement('div');
+      div.className = 'job-item';
+      div.dataset.idx = i;
+      div.innerHTML = `
+        <input type="text" class="job-name" value="${escHtml(j.name)}" placeholder="Nom du métier" style="flex:1.2"/>
+        <input type="text" class="job-romes rome-input" value="${escHtml(j.romes)}" placeholder="Codes ROME (ex: M1805,M1855)" style="flex:2"/>
+        <button onclick="removeJob(${i})">✕</button>`;
+      list.appendChild(div);
+    });
+  }
+
+  function addJob() {
+    const items = document.querySelectorAll('.job-item');
+    const newJob = { name: "Nouveau métier", romes: "" };
+    const jobs = getJobsFromUI();
+    jobs.push(newJob);
+    renderJobs(jobs);
+  }
+
+  function removeJob(idx) {
+    const jobs = getJobsFromUI();
+    jobs.splice(idx, 1);
+    renderJobs(jobs);
+  }
+
+  function getJobsFromUI() {
+    return [...document.querySelectorAll('.job-item')].map(el => ({
+      name: el.querySelector('.job-name').value.trim(),
+      romes: el.querySelector('.job-romes').value.trim(),
+    })).filter(j => j.name);
+  }
+
+  // ── Load config ─────────────────────────────────────────────────
+  async function loadConfig() {
+    const res = await fetch('/api/config');
+    config = await res.json();
+    document.getElementById('f-lastname').value  = config.lastname  || '';
+    document.getElementById('f-firstname').value = config.firstname || '';
+    document.getElementById('f-email').value     = config.email     || '';
+    document.getElementById('f-phone').value     = config.phone     || '';
+    document.getElementById('f-cv').value        = config.cv_path   || '';
+    document.getElementById('f-message').value   = config.message_template || '';
+    document.getElementById('f-delay').value     = config.delay_between_applications ?? 3;
+    document.getElementById('f-headless').checked = config.headless || false;
+    renderCities(config.selected_cities || CITIES);
+    renderJobs(config.job_searches || []);
+  }
+
+  // ── Save config ──────────────────────────────────────────────────
+  async function saveConfig() {
+    const cfg = {
+      lastname:  document.getElementById('f-lastname').value.trim(),
+      firstname: document.getElementById('f-firstname').value.trim(),
+      email:     document.getElementById('f-email').value.trim(),
+      phone:     document.getElementById('f-phone').value.trim(),
+      cv_path:   document.getElementById('f-cv').value.trim(),
+      message_template: document.getElementById('f-message').value,
+      delay_between_applications: parseInt(document.getElementById('f-delay').value) || 3,
+      headless:  document.getElementById('f-headless').checked,
+      selected_cities: getSelectedCities(),
+      job_searches: getJobsFromUI(),
+    };
+    await fetch('/api/config', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(cfg) });
+    config = cfg;
+    toast('✅ Configuration enregistrée');
+  }
+
+  // ── Start / stop ─────────────────────────────────────────────────
+  async function startAuto() {
+    await saveConfig();
+    const cfg = config;
+    const res = await fetch('/api/start', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(cfg)
+    });
+    const data = await res.json();
+    if (data.error) { toast('⚠️ ' + data.error); return; }
+    toast('▶ Automatisation démarrée');
+    startSSE();
+    showTab('auto');
+  }
+
+  async function stopAuto() {
+    await fetch('/api/stop', { method:'POST' });
+    toast('⏹ Arrêt en cours…');
+  }
+
+  async function scheduleAuto() {
+    await saveConfig();
+    const res = await fetch('/api/schedule_midnight', { method:'POST' });
+    const data = await res.json();
+    toast('⏰ Reprise programmée à minuit : ' + (data.scheduled ? data.scheduled.substring(0,16).replace('T',' ') : '?'));
+  }
+
+  // ── SSE logs ─────────────────────────────────────────────────────
+  function startSSE() {
+    if (evtSource) { evtSource.close(); }
+    evtSource = new EventSource('/api/logs/stream');
+    evtSource.onmessage = e => {
+      try {
+        const d = JSON.parse(e.data);
+        if (d.heartbeat) return;
+        appendLog(d);
+      } catch(_) {}
+    };
+    evtSource.onerror = () => { /* ignore heartbeat errors */ };
+  }
+
+  function appendLog(entry) {
+    const c = document.getElementById('log-container');
+    const div = document.createElement('div');
+    div.className = 'log-line log-' + (entry.level || 'info');
+    div.textContent = `[${entry.time}] ${entry.message}`;
+    c.appendChild(div);
+    if (document.getElementById('autoscroll').checked) {
+      c.scrollTop = c.scrollHeight;
+    }
+    // Keep max 500 lines
+    while (c.childElementCount > 500) c.removeChild(c.firstChild);
+  }
+
+  function clearLogs() {
+    document.getElementById('log-container').innerHTML = '';
+  }
+
+  // ── Poll status ──────────────────────────────────────────────────
+  async function pollStatus() {
+    try {
+      const res = await fetch('/api/status');
+      const d = await res.json();
+
+      // Badge
+      const badge = document.getElementById('status-badge');
+      const labels = { stopped:'Arrêté', running:'En cours', stopping:'Arrêt…' };
+      badge.textContent = labels[d.status] || d.status;
+      badge.className = 'badge-' + (d.status || 'stopped');
+
+      // Stats
+      document.getElementById('st-sent').textContent = d.sent_today || 0;
+      document.getElementById('st-skip').textContent = d.skipped   || 0;
+      document.getElementById('st-err').textContent  = d.errors    || 0;
+
+      // Current op
+      const op = document.getElementById('current-op');
+      if (d.status === 'running') {
+        op.style.display = 'flex';
+        document.getElementById('cur-city').textContent = d.current_city || '?';
+        document.getElementById('cur-job').textContent  = d.current_job  || '?';
+        document.getElementById('cur-company').textContent = d.current_company ? `→ ${d.current_company}` : '';
+      } else {
+        op.style.display = 'none';
+      }
+
+      // Buttons
+      document.getElementById('btn-start').disabled = (d.status === 'running');
+      document.getElementById('btn-stop').disabled  = (d.status !== 'running');
+
+      // Auto-reconnect SSE when running
+      if (d.status === 'running' && (!evtSource || evtSource.readyState === EventSource.CLOSED)) {
+        startSSE();
+      }
+    } catch(_) {}
+  }
+
+  // ── History ──────────────────────────────────────────────────────
+  async function loadHistory() {
+    const res = await fetch('/api/sent');
+    const data = await res.json();
+    const tbody = document.getElementById('hist-body');
+    document.getElementById('hist-count').textContent = `${data.length} candidature(s) enregistrée(s) au total`;
+    tbody.innerHTML = '';
+    // Show newest first
+    const sorted = [...data].reverse();
+    sorted.forEach(r => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${escHtml(r.date   || '')}</td>
+        <td>${escHtml(r.time   || '')}</td>
+        <td>${escHtml(r.company|| '')}</td>
+        <td style="font-size:.8rem;color:#6b7280;">${escHtml(r.siret || '')}</td>
+        <td>${escHtml(r.city  || '')}</td>
+        <td style="font-size:.82rem;">${escHtml(r.job  || '')}</td>
+        <td><span class="tag-sent">Envoyée</span></td>`;
+      tbody.appendChild(tr);
+    });
+  }
+
+  // ── Utils ────────────────────────────────────────────────────────
+  function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  // ── Init ─────────────────────────────────────────────────────────
+  loadConfig();
+  pollStatus();
+  setInterval(pollStatus, 2000);
+</script>
+</body>
+</html>

@@ -1,114 +1,1293 @@
 [
   {
+    "company": "DEGUIZ FRANCE"
+  },
+  {
+    "siret": "31996014200077",
+    "company": "CEGI ALFA",
+    "city": "Clermont-Ferrand",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:49:21"
+  },
+  {
+    "siret": "50352857200079",
+    "company": "OPENSTUDIO",
+    "city": "Clermont-Ferrand",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:49:40"
+  },
+  {
+    "siret": "39371736800012",
+    "company": "MONNET PATRICE PASCAL YVES",
+    "city": "Clermont-Ferrand",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:49:59"
+  },
+  {
+    "siret": "32609447100462",
+    "company": "SOCIETE NATIONALE DE RADIODIFFUSION RADI",
+    "city": "Clermont-Ferrand",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:50:18"
+  },
+  {
+    "siret": "87986717400010",
+    "company": "DANTE",
+    "city": "Clermont-Ferrand",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:50:37"
+  },
+  {
+    "siret": "79349666200024",
+    "company": "B2 NETWORK",
+    "city": "Clermont-Ferrand",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:50:57"
+  },
+  {
+    "siret": "49928485900042",
+    "company": "OPENIUM",
+    "city": "Clermont-Ferrand",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:51:16"
+  },
+  {
+    "siret": "84149632600015",
+    "company": "A'CAZ",
+    "city": "Clermont-Ferrand",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:51:35"
+  },
+  {
+    "siret": "50262985000038",
+    "company": "CLICK2CELL",
+    "city": "Clermont-Ferrand",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:51:55"
+  },
+  {
+    "siret": "49028043500044",
+    "company": "AGAETIS",
+    "city": "Clermont-Ferrand",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:52:14"
+  },
+  {
+    "siret": "32682006500646",
+    "company": "SOPRA STERIA GROUP",
+    "city": "Clermont-Ferrand",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:52:33"
+  },
+  {
+    "siret": "45364682000028",
+    "company": "PATRIMOINE &RETRAITE",
+    "city": "Clermont-Ferrand",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:52:58"
+  },
+  {
+    "siret": "80261986600055",
+    "company": "MONKEY FACTORY",
+    "city": "Clermont-Ferrand",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:53:17"
+  },
+  {
+    "siret": "38158988600039",
+    "company": "ABICOM",
+    "city": "Clermont-Ferrand",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:53:36"
+  },
+  {
+    "siret": "84467690800016",
+    "company": "GROUPEMENT DE COOPERATION SANITAIRE",
+    "city": "Clermont-Ferrand",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:53:55"
+  },
+  {
+    "siret": "51978079501024",
+    "company": "SOCULTUR",
+    "city": "Clermont-Ferrand",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:54:14"
+  },
+  {
+    "siret": "38340105600015",
+    "company": "MICAFLOR",
+    "city": "Clermont-Ferrand",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:54:34"
+  },
+  {
+    "siret": "88034162300010",
+    "company": "LOGAWIN",
+    "city": "Clermont-Ferrand",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:54:53"
+  },
+  {
+    "siret": "94903224700015",
+    "company": "CLAPAYE",
+    "city": "Clermont-Ferrand",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:55:12"
+  },
+  {
+    "siret": "82944317500015",
+    "company": "FDU CONSEIL",
+    "city": "Clermont-Ferrand",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:55:31"
+  },
+  {
+    "siret": "52196537600028",
+    "company": "LE BATEAU LIVRE",
+    "city": "Clermont-Ferrand",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:55:50"
+  },
+  {
+    "siret": "82464883600024",
+    "company": "FREEDGE SAS",
+    "city": "Clermont-Ferrand",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:56:10"
+  },
+  {
+    "siret": "79744292800033",
+    "company": "MUSSARD MICKAEL",
+    "city": "Clermont-Ferrand",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:56:29"
+  },
+  {
+    "siret": "82031163700012",
+    "company": "WAM-INGENIERIE",
+    "city": "Clermont-Ferrand",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:56:48"
+  },
+  {
+    "siret": "91112951800013",
+    "company": "DIGITAL POURPRE STUDIO",
+    "city": "Clermont-Ferrand",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:57:07"
+  },
+  {
+    "siret": "88779361000023",
+    "company": "ARKE",
+    "city": "Clermont-Ferrand",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:57:41"
+  },
+  {
+    "siret": "35218860100046",
+    "company": "MANTIS",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:59:00"
+  },
+  {
+    "siret": "91430889500012",
+    "company": "MERATIVE FRANCE",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:59:20"
+  },
+  {
+    "siret": "83391439300016",
+    "company": "INFORMATIONS",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:59:39"
+  },
+  {
+    "siret": "37785310600047",
+    "company": "GOLDATA",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "00:59:58"
+  },
+  {
+    "siret": "89394079100013",
+    "company": "BIOME",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:00:17"
+  },
+  {
+    "siret": "84345776300020",
+    "company": "N-VIBE",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:00:36"
+  },
+  {
+    "siret": "98092245400015",
+    "company": "FINDR TECHNOLOGIES SAS",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:00:56"
+  },
+  {
+    "siret": "88000750500014",
+    "company": "FULLPHYSIO",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:01:15"
+  },
+  {
+    "siret": "90285408200010",
+    "company": "WORK IT SOLUTIONS",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:01:35"
+  },
+  {
+    "siret": "91771170700013",
+    "company": "EXALT SHIELD",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:01:55"
+  },
+  {
+    "siret": "42881007100046",
+    "company": "PASSPORT SONGS MUSIC",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:02:14"
+  },
+  {
+    "siret": "49278438400017",
+    "company": "AEROPOP MUSIC",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:02:34"
+  },
+  {
+    "siret": "51367607200020",
+    "company": "REPUTATION SQUAD",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:02:54"
+  },
+  {
+    "siret": "83313095800014",
+    "company": "STOA",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:03:13"
+  },
+  {
+    "siret": "80414821100027",
+    "company": "LEMON LEARNING",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:03:33"
+  },
+  {
+    "siret": "53999543100027",
+    "company": "DE LA VISITE D'ENTREPRISE",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:03:53"
+  },
+  {
+    "siret": "88775037000025",
+    "company": "DOLPHINS",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:04:13"
+  },
+  {
+    "siret": "90870783900019",
+    "company": "ITEC WORKPLACE",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:04:32"
+  },
+  {
+    "siret": "38490033800011",
+    "company": "SOC IGNAZI",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:04:52"
+  },
+  {
+    "siret": "43264758400056",
+    "company": "RAKUTEN FRANCE",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:05:11"
+  },
+  {
+    "siret": "81454037300077",
+    "company": "PLEZI",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:05:30"
+  },
+  {
+    "siret": "78874493600014",
+    "company": "M2AD",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:05:50"
+  },
+  {
+    "siret": "80495882500031",
+    "company": "HUNTEED",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:06:09"
+  },
+  {
+    "siret": "89382756800013",
+    "company": "BMAT MUSIC INNOVATION",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:06:28"
+  },
+  {
+    "siret": "83167627500058",
+    "company": "TELEOPHTALMO",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:06:47"
+  },
+  {
+    "siret": "95315642900011",
+    "company": "IMEX PARIS",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:07:06"
+  },
+  {
+    "siret": "97784423200016",
+    "company": "RYTE FRANCE",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:07:25"
+  },
+  {
+    "siret": "97783347400017",
+    "company": "11H16",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:07:45"
+  },
+  {
+    "siret": "88897962200014",
+    "company": "NOVALEND TECH SOLUTIONS",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:08:04"
+  },
+  {
+    "siret": "83395283100034",
+    "company": "PERFMAKER",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:08:23"
+  },
+  {
+    "siret": "81336190400010",
+    "company": "LUNALOGIC DATA SCIENCES",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:08:42"
+  },
+  {
+    "siret": "81525454500024",
+    "company": "COINHOUSE",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:09:01"
+  },
+  {
+    "siret": "92162185000020",
+    "company": "CADENCE FILMS",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:09:21"
+  },
+  {
+    "siret": "84076926900027",
+    "company": "MAJELAN",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:09:40"
+  },
+  {
+    "siret": "89070775500017",
+    "company": "ANDY FAMILY",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:09:59"
+  },
+  {
+    "siret": "82211179500040",
+    "company": "BUILDRZ",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:10:18"
+  },
+  {
+    "siret": "83172275600044",
+    "company": "DIDOMI SAS",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:10:37"
+  },
+  {
+    "siret": "52478120000042",
+    "company": "HUMANOID",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:10:56"
+  },
+  {
+    "siret": "92147561200013",
+    "company": "NATAN CONSULTING",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:11:15"
+  },
+  {
+    "siret": "89412358700020",
+    "company": "SMART4 SYSTEMS",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:11:35"
+  },
+  {
+    "siret": "82178880900043",
+    "company": "SYNAPSE",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:11:54"
+  },
+  {
+    "siret": "44293365100048",
+    "company": "BI.",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:12:13"
+  },
+  {
+    "siret": "84825670700029",
+    "company": "JITENSHA",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:12:32"
+  },
+  {
+    "siret": "50387517100046",
+    "company": "EULIDIA",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:12:51"
+  },
+  {
+    "siret": "98276058900019",
+    "company": "SULVIA",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:13:10"
+  },
+  {
+    "siret": "42825487400038",
+    "company": "BILENDI",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:13:30"
+  },
+  {
+    "siret": "53891993700036",
+    "company": "SOLENDRO",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:13:49"
+  },
+  {
+    "siret": "88955025700014",
+    "company": "REKAM",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:14:08"
+  },
+  {
+    "siret": "78978326300021",
+    "company": "LUTESSA",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:14:27"
+  },
+  {
+    "siret": "32219010900379",
+    "company": "EURO-INFORMATION PRODUCTION - GROUPEMENT",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:14:46"
+  },
+  {
+    "siret": "44506759800059",
+    "company": "WAGRAM MUSIC",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:15:05"
+  },
+  {
+    "siret": "79035676000054",
+    "company": "SWAPCARD CORPORATION",
+    "city": "Paris",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:15:24"
+  },
+  {
     "siret": "42204478400037",
     "company": "MON UNIVERT",
     "city": "Lyon",
     "job": "Développement web, intégration",
-    "date": "2026-04-08",
-    "time": "16:09:41"
+    "date": "2026-04-13",
+    "time": "01:16:41"
   },
   {
     "siret": "33125387200021",
     "company": "LES PRODUCTEURS",
     "city": "Lyon",
     "job": "Développement web, intégration",
-    "date": "2026-04-08",
-    "time": "16:10:22"
+    "date": "2026-04-13",
+    "time": "01:17:01"
   },
   {
     "siret": "83507352900025",
     "company": "MBUSINESSEUROPE",
     "city": "Lyon",
     "job": "Développement web, intégration",
-    "date": "2026-04-08",
-    "time": "16:10:42"
+    "date": "2026-04-13",
+    "time": "01:17:20"
   },
   {
     "siret": "91027425700013",
     "company": "WE IT",
     "city": "Lyon",
     "job": "Développement web, intégration",
-    "date": "2026-04-08",
-    "time": "16:11:02"
+    "date": "2026-04-13",
+    "time": "01:17:40"
   },
   {
     "siret": "77557197900134",
     "company": "LIBRAIRIE CHRETIENNE CLC",
     "city": "Lyon",
     "job": "Développement web, intégration",
-    "date": "2026-04-08",
-    "time": "16:11:42"
-  },
-  {
-    "siret": "98211316900014",
-    "company": "GRAINDESABLE",
-    "city": "Lyon",
-    "job": "Développement web, intégration",
-    "date": "2026-04-08",
-    "time": "16:12:22"
+    "date": "2026-04-13",
+    "time": "01:17:59"
   },
   {
     "siret": "53337361900113",
     "company": "PRIME ENGINEERING",
     "city": "Lyon",
     "job": "Développement web, intégration",
-    "date": "2026-04-08",
-    "time": "16:13:22"
+    "date": "2026-04-13",
+    "time": "01:18:18"
   },
   {
-    "siret": "91285800800010",
-    "company": "LES TOQUES BLANCHES DU MONDE",
+    "siret": "49496792000039",
+    "company": "DAYLAC",
     "city": "Lyon",
     "job": "Développement web, intégration",
-    "date": "2026-04-08",
-    "time": "16:37:48"
+    "date": "2026-04-13",
+    "time": "01:18:38"
   },
   {
-    "siret": "43261042600095",
-    "company": "AVANADE FRANCE",
+    "siret": "92233570800017",
+    "company": "BABILY",
     "city": "Lyon",
     "job": "Développement web, intégration",
-    "date": "2026-04-08",
-    "time": "16:38:07"
+    "date": "2026-04-13",
+    "time": "01:18:57"
   },
   {
-    "siret": "90933967300016",
-    "company": "TREELY",
+    "siret": "49748461800036",
+    "company": "OPERA",
     "city": "Lyon",
     "job": "Développement web, intégration",
-    "date": "2026-04-08",
-    "time": "16:38:48"
+    "date": "2026-04-13",
+    "time": "01:19:16"
   },
   {
-    "siret": "83105145300023",
-    "company": "MON PETIT PLACEMENT",
+    "siret": "39827989300042",
+    "company": "TELAMON",
     "city": "Lyon",
     "job": "Développement web, intégration",
-    "date": "2026-04-08",
-    "time": "16:39:08"
+    "date": "2026-04-13",
+    "time": "01:19:36"
   },
   {
-    "siret": "81178388500023",
-    "company": "DEM",
+    "siret": "88081173200010",
+    "company": "TALK-E",
     "city": "Lyon",
     "job": "Développement web, intégration",
-    "date": "2026-04-08",
-    "time": "16:39:28"
+    "date": "2026-04-13",
+    "time": "01:19:56"
   },
   {
-    "siret": "50449713200036",
-    "company": "ITINSELL SOFTWARE",
+    "siret": "49347300300181",
+    "company": "RIA FRANCE",
     "city": "Lyon",
     "job": "Développement web, intégration",
-    "date": "2026-04-08",
-    "time": "16:39:48"
+    "date": "2026-04-13",
+    "time": "01:20:15"
   },
   {
-    "siret": "34906767800145",
-    "company": "GLENAT DIFFUSION",
+    "siret": "44767743600019",
+    "company": "LE BAL DES ARDENTS",
     "city": "Lyon",
     "job": "Développement web, intégration",
-    "date": "2026-04-08",
-    "time": "16:40:28"
+    "date": "2026-04-13",
+    "time": "01:20:35"
+  },
+  {
+    "siret": "94886054900013",
+    "company": "ATHEKA",
+    "city": "Lyon",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:20:55"
+  },
+  {
+    "siret": "98170237600014",
+    "company": "NUSTRALE STUDIOS",
+    "city": "Lyon",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:21:15"
+  },
+  {
+    "siret": "95192535300017",
+    "company": "SHODO LYON",
+    "city": "Lyon",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:21:34"
+  },
+  {
+    "siret": "53160441100037",
+    "company": "LA COMPAGNIE DES ANIMAUX",
+    "city": "Lyon",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:21:54"
+  },
+  {
+    "siret": "83780392300023",
+    "company": "THE GEEK FAMILY",
+    "city": "Lyon",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:22:14"
+  },
+  {
+    "siret": "90380104100018",
+    "company": "KATALL",
+    "city": "Lyon",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:22:33"
+  },
+  {
+    "siret": "47936165100017",
+    "company": "TROLLUNE",
+    "city": "Lyon",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:22:52"
+  },
+  {
+    "siret": "80516172600049",
+    "company": "CHER AMI",
+    "city": "Lyon",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:23:11"
+  },
+  {
+    "siret": "79939769000048",
+    "company": "GETINOV",
+    "city": "Lyon",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:23:30"
+  },
+  {
+    "siret": "82532582200021",
+    "company": "INSIDIAE",
+    "city": "Lyon",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "01:23:50"
+  },
+  {
+    "siret": "82347570200036",
+    "company": "MYCONSULTING",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:00:20"
+  },
+  {
+    "siret": "90174029000027",
+    "company": "N-CYP",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:00:39"
+  },
+  {
+    "siret": "88817528800016",
+    "company": "NIGHTCALL RECORDS",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:00:59"
+  },
+  {
+    "siret": "82001491800032",
+    "company": "NIP UX EXPERTS",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:01:18"
+  },
+  {
+    "siret": "85212615000030",
+    "company": "NOVO SENSO",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:01:37"
+  },
+  {
+    "siret": "33853209600058",
+    "company": "NOVRH",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:01:57"
+  },
+  {
+    "siret": "90911584200017",
+    "company": "ORBITAL DREAMS",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:02:16"
+  },
+  {
+    "siret": "82980465700023",
+    "company": "PERTUSATOFILMS",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:02:36"
+  },
+  {
+    "siret": "95207134800017",
+    "company": "POZE PRODUCTION",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:02:55"
+  },
+  {
+    "siret": "89911401100021",
+    "company": "PROSTPERIA",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:03:15"
+  },
+  {
+    "siret": "82190011500022",
+    "company": "PSEVEN",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:03:34"
+  },
+  {
+    "siret": "79497410500031",
+    "company": "RADIO LIBRES EN PERIGORD",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:03:54"
+  },
+  {
+    "siret": "44897153100042",
+    "company": "SECUSERVE",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:04:13"
+  },
+  {
+    "siret": "81220347900090",
+    "company": "SERMA SAFETY AND SECURITY",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:04:33"
+  },
+  {
+    "siret": "51978079500844",
+    "company": "SOCULTUR",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:04:52"
+  },
+  {
+    "siret": "49358008800018",
+    "company": "SOS PC 34",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:05:12"
+  },
+  {
+    "siret": "88032332400017",
+    "company": "SOSTAG",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:05:31"
+  },
+  {
+    "siret": "53329776800012",
+    "company": "STREAMWIDE FRANCE",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:05:50"
+  },
+  {
+    "siret": "35141369500096",
+    "company": "STUDIA SOLUTIONS",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:06:10"
+  },
+  {
+    "siret": "83410638700014",
+    "company": "SUNDERBON",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:06:29"
+  },
+  {
+    "siret": "79304131000020",
+    "company": "SURICOG",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:06:49"
+  },
+  {
+    "siret": "90754924000022",
+    "company": "TALOSI HDF",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:07:08"
+  },
+  {
+    "siret": "80792762900038",
+    "company": "TEKLIA",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:07:28"
+  },
+  {
+    "siret": "88981156800027",
+    "company": "TOTEMIA",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:07:47"
+  },
+  {
+    "siret": "53873293400012",
+    "company": "TRILLEX",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:08:07"
+  },
+  {
+    "siret": "84987872300022",
+    "company": "TROUVERMONARCHITECTE",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:08:26"
+  },
+  {
+    "siret": "45141288600033",
+    "company": "WAISSO",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:08:46"
+  },
+  {
+    "siret": "88154281500025",
+    "company": "WIIZ",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:09:05"
+  },
+  {
+    "siret": "43494076300056",
+    "company": "YPOK",
+    "city": "Saint-Étienne",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:09:24"
+  },
+  {
+    "siret": "33393828000042",
+    "company": "ARAKIS",
+    "city": "Valence",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:10:30"
+  },
+  {
+    "siret": "91944260800015",
+    "company": "ZOOMICI TECHNOLOGIES",
+    "city": "Valence",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:10:49"
+  },
+  {
+    "siret": "49482771000042",
+    "company": "SDLM TRAVAUX",
+    "city": "Valence",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:11:08"
+  },
+  {
+    "siret": "42867712400334",
+    "company": "THALES SERVICES NUMERIQUES SAS",
+    "city": "Valence",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:11:28"
+  },
+  {
+    "siret": "51841188900059",
+    "company": "KOESIO ASSET MANAGEMENT",
+    "city": "Valence",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:11:47"
+  },
+  {
+    "siret": "45187062000056",
+    "company": "BAC@IDEES",
+    "city": "Valence",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:12:07"
+  },
+  {
+    "siret": "41197398500053",
+    "company": "ETRE ALAIN",
+    "city": "Valence",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:12:26"
+  },
+  {
+    "siret": "51978079500125",
+    "company": "SOCULTUR",
+    "city": "Valence",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:12:46"
+  },
+  {
+    "siret": "79874842200028",
+    "company": "SCADERIS",
+    "city": "Valence",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:13:05"
+  },
+  {
+    "siret": "48001249100035",
+    "company": "GRAVURE ET TAMPONS",
+    "city": "Valence",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:13:25"
+  },
+  {
+    "siret": "50152203100027",
+    "company": "ITP-CONSULT",
+    "city": "Valence",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:13:44"
+  },
+  {
+    "siret": "91052378600010",
+    "company": "X PROJETS",
+    "city": "Valence",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:14:04"
+  },
+  {
+    "siret": "49004717200021",
+    "company": "ACTY PRINT INFORMATIQUE",
+    "city": "Valence",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:14:23"
+  },
+  {
+    "siret": "79861375800027",
+    "company": "TRANSFERTPRO",
+    "city": "Valence",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:14:43"
+  },
+  {
+    "siret": "89121475100010",
+    "company": "JMS SOFTWARE",
+    "city": "Valence",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:15:02"
+  },
+  {
+    "siret": "80999284500036",
+    "company": "WINZANA",
+    "city": "Valence",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:15:22"
+  },
+  {
+    "siret": "79424279200016",
+    "company": "ALLSAN",
+    "city": "Valence",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:15:41"
+  },
+  {
+    "siret": "47809826200031",
+    "company": "6TEMATIK",
+    "city": "Valence",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:16:01"
+  },
+  {
+    "siret": "90900059800013",
+    "company": "LIBRAIRIE DISQUAIRE MUSES",
+    "city": "Valence",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:16:20"
+  },
+  {
+    "siret": "80208242000018",
+    "company": "MDV3I ENGINEERING",
+    "city": "Valence",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:16:39"
+  },
+  {
+    "siret": "79016783700034",
+    "company": "LOUTY",
+    "city": "Valence",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:16:59"
+  },
+  {
+    "siret": "88056148500025",
+    "company": "@TI INFORMATIQUE",
+    "city": "Valence",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:17:18"
+  },
+  {
+    "siret": "49147610700017",
+    "company": "LA BALANCOIRE",
+    "city": "Valence",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:17:38"
+  },
+  {
+    "siret": "83377227000017",
+    "company": "ZAM'INFORMATIQUE",
+    "city": "Valence",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:17:57"
+  },
+  {
+    "siret": "31091454400021",
+    "company": "MEDAS INSTRUMENTS",
+    "city": "Vichy",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:19:01"
+  },
+  {
+    "siret": "84404818100011",
+    "company": "MA FERME GROUPE",
+    "city": "Vichy",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:19:20"
+  },
+  {
+    "siret": "39244006100076",
+    "company": "NEXUS/FRANCE",
+    "city": "Vichy",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:19:39"
+  },
+  {
+    "siret": "95182696500018",
+    "company": "LS2M FRANCE",
+    "city": "Vichy",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:19:59"
+  },
+  {
+    "siret": "87978771100016",
+    "company": "DEGUIZ FRANCE",
+    "city": "Vichy",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:20:18"
+  },
+  {
+    "siret": "83865175000054",
+    "company": "SIMA",
+    "city": "Vichy",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:20:38"
+  },
+  {
+    "siret": "45127217300043",
+    "company": "ALLIER CREDIT",
+    "city": "Montluçon",
+    "job": "Développement web, intégration",
+    "date": "2026-04-13",
+    "time": "02:21:41"
   }
 ]

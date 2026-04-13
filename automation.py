@@ -14,12 +14,19 @@ from urllib.parse import quote
 BASE_URL = "https://labonnealternance.apprentissage.beta.gouv.fr"
 
 CITIES_DEFAULT = [
-    {"name": "Strasbourg", "address": "Strasbourg 67000", "lat": 48.5798, "lon": 7.7615},
-    {"name": "Nantes",     "address": "Nantes 44000",     "lat": 47.2184, "lon": -1.5536},
-    {"name": "Lyon",       "address": "Lyon 69001",       "lat": 45.7485, "lon":  4.8467},
-    {"name": "Metz",       "address": "Metz 57000",       "lat": 49.1193, "lon":  6.1757},
-    {"name": "Nancy",      "address": "Nancy 54000",      "lat": 48.6921, "lon":  6.1844},
-    {"name": "Marseille",  "address": "Marseille 13001",  "lat": 43.2965, "lon":  5.3811},
+    {"name": "Clermont-Ferrand", "address": "Clermont-Ferrand 63000", "lat": 45.7772, "lon": 3.0870},
+
+    # Priority 1 - Best opportunity + acceptable travel time
+    {"name": "Paris",            "address": "Paris 75000",            "lat": 48.8566, "lon": 2.3522},
+    {"name": "Lyon",             "address": "Lyon 69001",             "lat": 45.7640, "lon": 4.8357},
+
+    # Priority 2 - Secondary nearby markets
+    {"name": "Saint-Étienne",    "address": "Saint-Étienne 42000",    "lat": 45.4397, "lon": 4.3872},
+    {"name": "Valence",          "address": "Valence 26000",          "lat": 44.9334, "lon": 4.8924},
+
+    # Optional - low priority / fallback
+    {"name": "Vichy",            "address": "Vichy 03200",            "lat": 46.1286, "lon": 3.4264},
+    {"name": "Montluçon",        "address": "Montluçon 03100",        "lat": 46.3400, "lon": 2.6020},
 ]
 
 JOB_SEARCHES_DEFAULT = [
@@ -121,10 +128,7 @@ class LBAAutomation:
         headless = self.config.get("headless", False)
         delay = int(self.config.get("delay_between_applications", 3))
 
-        selected_names = self.config.get(
-            "selected_cities", [c["name"] for c in CITIES_DEFAULT]
-        )
-        cities = [c for c in CITIES_DEFAULT if c["name"] in selected_names]
+        cities = CITIES_DEFAULT
         jobs = self.config.get("job_searches", JOB_SEARCHES_DEFAULT)
 
         async with async_playwright() as p:
@@ -359,49 +363,11 @@ class LBAAutomation:
                 self._log(f"  ⚠️  Aucune carte de résultat: {city['name']}", "warning")
                 return page, []
 
-            # ── 8. Scroll pour charger TOUTES les cartes ─────────────────
-            # Stratégie : on scroll la dernière carte visible dans le viewport,
-            # ce qui force React/LBA à charger les suivantes.
-            prev_count = 0
-            no_change = 0
-            self._log("  📜 Scroll en cours…")
-            while no_change < 5:
-                # Compter les cartes actuelles
-                cur = await page.locator(".fr-card").count()
-                if cur > prev_count:
-                    self._log(f"  📜 {cur} carte(s) chargées…")
-                    no_change = 0
-                    prev_count = cur
-                else:
-                    no_change += 1
-
-                # Scroll la dernière carte dans le viewport
-                try:
-                    last_card = page.locator(".fr-card").last
-                    await last_card.scroll_into_view_if_needed(timeout=3000)
-                except Exception:
-                    pass
-                await asyncio.sleep(0.8)
-
-                # Cliquer "Voir plus" / "Charger plus" si visible
-                for btn_text in ["Voir plus", "Charger plus", "Afficher plus"]:
-                    try:
-                        btn = page.locator(f'button:has-text("{btn_text}")').first
-                        if await btn.count() > 0 and await btn.is_visible():
-                            await btn.click()
-                            self._log(f"  📜 Clic sur « {btn_text} »")
-                            await asyncio.sleep(2)
-                            no_change = 0
-                    except Exception:
-                        pass
-
-            total_loaded = await page.locator(".fr-card").count()
-            self._log(f"  📜 Scroll terminé — {total_loaded} carte(s) chargées au total")
-
-            # ── 9. Collecter UNIQUEMENT les cartes "Candidature simplifiée" ──
-            # Condition IMPÉRATIVE : le texte de la carte doit contenir
-            # "candidature simplifi" (insensible à la casse).
-            # On prend aussi celles avec "candidature spontan" en bonus.
+            # ── 8–9. Scroll + collecte incrémentale ─────────────────────────
+            # LBA utilise une liste virtualisée : le DOM ne contient qu’environ
+            # 20–30 `.fr-card` à la fois. Compter les cartes ou « tout charger »
+            # une seule fois ne suffit pas — il faut fusionner les SIRET à chaque
+            # défilement jusqu’à ce qu’aucune nouvelle carte éligible n’apparaisse.
 
             JS_COLLECT = r"""
 () => {
@@ -452,28 +418,101 @@ class LBAAutomation:
     return { total: debugTotal, entries: results, debug: debug };
 }
 """
-            js_result = await page.evaluate(JS_COLLECT)
-            total_cards = js_result["total"]
-            raw_entries = js_result["entries"]
-            debug_texts = js_result.get("debug", [])
+            JS_SCROLL_STEP = r"""
+() => {
+    const step = Math.max(300, Math.floor(window.innerHeight * 0.88));
+    for (const el of document.querySelectorAll('main, [role="main"], article, div')) {
+        try {
+            const st = getComputedStyle(el);
+            if (!/auto|scroll|overlay/.test(st.overflowY || '')) continue;
+            if (el.scrollHeight <= el.clientHeight + 80) continue;
+            const t = el.scrollTop;
+            el.scrollTop = Math.min(t + step, el.scrollHeight - el.clientHeight);
+            if (el.scrollTop !== t) return;
+        } catch (e) {}
+    }
+    const maxY = Math.max(
+        document.documentElement.scrollHeight,
+        document.body.scrollHeight
+    ) - window.innerHeight;
+    window.scrollBy(0, step);
+    if (window.scrollY + window.innerHeight < maxY - 8) return;
+    window.scrollTo(0, Math.max(0, maxY));
+}
+"""
 
-            self._log(f"  🔎 {total_cards} carte(s) .fr-card — {len(raw_entries)} avec « Candidature simplifiée »")
-            # Debug : contenu des premières cartes
-            for i, dtxt in enumerate(debug_texts):
+            accumulated: dict[str, dict] = {}
+            stagnation = 0
+            max_stagnation = 28
+            prev_unique = 0
+            first_debug: list | None = None
+
+            self._log("  📜 Défilement + collecte incrémentale (liste virtualisée)…")
+            while stagnation < max_stagnation:
+                js_result = await page.evaluate(JS_COLLECT)
+                if first_debug is None:
+                    first_debug = js_result.get("debug", [])
+
+                for item in js_result["entries"]:
+                    s = item["siret"]
+                    if s not in accumulated:
+                        accumulated[s] = {"href": item["href"], "type": item["type"]}
+
+                n = len(accumulated)
+                if n > prev_unique:
+                    self._log(
+                        f"  📜 {n} entreprise(s) « candidature simplifiée » "
+                        f"({js_result['total']} carte(s) dans le DOM)"
+                    )
+                    prev_unique = n
+                    stagnation = 0
+                else:
+                    stagnation += 1
+
+                for btn_text in ["Voir plus", "Charger plus", "Afficher plus"]:
+                    try:
+                        btn = page.locator(f'button:has-text("{btn_text}")').first
+                        if await btn.count() > 0 and await btn.is_visible():
+                            await btn.click()
+                            self._log(f"  📜 Clic sur « {btn_text} »")
+                            await asyncio.sleep(2)
+                            stagnation = 0
+                    except Exception:
+                        pass
+
+                await page.evaluate(JS_SCROLL_STEP)
+                try:
+                    last_card = page.locator(".fr-card").last
+                    await last_card.scroll_into_view_if_needed(timeout=2500)
+                except Exception:
+                    pass
+                await asyncio.sleep(0.75)
+
+            raw_entries = [
+                {"siret": s, "href": v["href"], "type": v["type"]}
+                for s, v in accumulated.items()
+            ]
+            total_cards = await page.locator(".fr-card").count()
+
+            self._log(
+                f"  🔎 Fin collecte — {len(raw_entries)} SIRET unique(s), "
+                f"{total_cards} carte(s) .fr-card dans le DOM à l’arrêt"
+            )
+            for i, dtxt in enumerate(first_debug or []):
                 self._log(f"  🐛 Carte {i}: {dtxt[:150]}…")
 
-            seen: set[str] = set()
-            for item in raw_entries:
+            max_detail_logs = 40
+            for idx, item in enumerate(raw_entries):
                 siret = item["siret"]
                 href = item["href"]
                 kind = item["type"]
-                if siret in seen:
-                    continue
-                seen.add(siret)
                 entries.append((siret, href))
-                label = "SPONTANÉE" if kind == "spontanee" else "SIMPLIFIÉE"
-                short = href[:90] + "…" if len(href) > 90 else href
-                self._log(f"  🏢 [{label}] SIRET {siret} → {short}")
+                if idx < max_detail_logs:
+                    label = "SPONTANÉE" if kind == "spontanee" else "SIMPLIFIÉE"
+                    short = href[:90] + "…" if len(href) > 90 else href
+                    self._log(f"  🏢 [{label}] SIRET {siret} → {short}")
+            if len(raw_entries) > max_detail_logs:
+                self._log(f"  … (+{len(raw_entries) - max_detail_logs} autres, détail tronqué dans les logs)")
 
             self._log(
                 f"  → {len(entries)} entreprise(s) : "

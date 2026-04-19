@@ -69,6 +69,15 @@
     }
     textarea { resize: vertical; min-height: 110px; }
 
+    .cv-upload-row {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+      margin-bottom: 10px;
+    }
+    .cv-upload-row input[type="file"] {
+      font-size: .88rem; max-width: 100%;
+    }
+    .cv-upload-hint { font-size: .82rem; color: #6b7280; }
+
     /* ── City checkboxes ── */
     .city-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
     .city-check { display: flex; align-items: center; gap: 8px; font-size: .9rem;
@@ -224,8 +233,13 @@
         </div>
         <div class="form-row single">
           <div>
-            <label for="f-cv">Chemin vers votre CV (PDF ou DOCX)</label>
-            <input type="text" id="f-cv" placeholder="C:\Users\VotreNom\Documents\CV.pdf" />
+            <label for="f-cv-file">Déposer votre CV (PDF)</label>
+            <div class="cv-upload-row">
+              <input type="file" id="f-cv-file" accept=".pdf,application/pdf" onchange="uploadCvFile(this)" />
+              <span class="cv-upload-hint" id="f-cv-upload-status"></span>
+            </div>
+            <label for="f-cv" style="margin-top:4px;">Chemin utilisé par l’automatisation (éditable)</label>
+            <input type="text" id="f-cv" placeholder="Déposez un PDF ci-dessus ou collez un chemin local" />
           </div>
         </div>
       </div>
@@ -378,9 +392,10 @@
 <div id="toast"></div>
 
 <!-- ── Scripts ── -->
+<script type="application/json" id="config-cities-data">{{ cities | tojson }}</script>
 <script>
   // ── Config ──────────────────────────────────────────────────────
-  const CITIES = ["Strasbourg","Nantes","Lyon","Metz","Nancy","Marseille"];
+  const CITIES = JSON.parse(document.getElementById('config-cities-data').textContent);
   let config = {};
   let evtSource = null;
 
@@ -470,11 +485,55 @@
     document.getElementById('f-email').value     = config.email     || '';
     document.getElementById('f-phone').value     = config.phone     || '';
     document.getElementById('f-cv').value        = config.cv_path   || '';
+    const cvStatus = document.getElementById('f-cv-upload-status');
+    if (cvStatus) {
+      const p = (config.cv_path || '').replace(/\\/g, '/').toLowerCase();
+      cvStatus.textContent = p.endsWith('/uploads/cv.pdf')
+        ? 'CV déposé depuis cette page (uploads/cv.pdf sur le serveur).'
+        : '';
+    }
     document.getElementById('f-message').value   = config.message_template || '';
     document.getElementById('f-delay').value     = config.delay_between_applications ?? 3;
     document.getElementById('f-headless').checked = config.headless || false;
     renderCities(config.selected_cities || CITIES);
     renderJobs(config.job_searches || []);
+  }
+
+  // ── Upload CV (PDF) ───────────────────────────────────────────────
+  async function uploadCvFile(input) {
+    const file = input.files && input.files[0];
+    if (!file) return;
+    if (!file.name.toLowerCase().endsWith('.pdf')) {
+      toast('⚠️ Seuls les fichiers PDF sont acceptés');
+      input.value = '';
+      return;
+    }
+    const maxBytes = 15 * 1024 * 1024;
+    if (file.size > maxBytes) {
+      toast('⚠️ PDF trop volumineux (maximum 15 Mo)');
+      input.value = '';
+      return;
+    }
+    const fd = new FormData();
+    fd.append('file', file);
+    const res = await fetch('/api/upload/cv', { method: 'POST', body: fd });
+    let data = {};
+    try { data = await res.json(); } catch (_) {}
+    if (!res.ok) {
+      toast('⚠️ ' + (data.error || 'Échec du dépôt du CV'));
+      input.value = '';
+      return;
+    }
+    document.getElementById('f-cv').value = data.cv_path || '';
+    config.cv_path = data.cv_path || '';
+    const hint = document.getElementById('f-cv-upload-status');
+    if (hint) {
+      hint.textContent = data.original_name
+        ? 'Dernier dépôt : ' + data.original_name + ' → enregistré sur le serveur.'
+        : 'CV enregistré sur le serveur.';
+    }
+    toast('✅ CV PDF enregistré');
+    input.value = '';
   }
 
   // ── Save config ──────────────────────────────────────────────────

@@ -12,8 +12,13 @@ from pathlib import Path
 
 from flask import Flask, Response, jsonify, render_template, request, stream_with_context
 
+from automation import CITIES_DEFAULT
+
 app = Flask(__name__)
 app.config["JSON_ENSURE_ASCII"] = False
+app.config["MAX_CONTENT_LENGTH"] = 15 * 1024 * 1024  # 15 Mo max pour le CV
+
+UPLOADS_DIR = Path(__file__).resolve().parent / "uploads"
 
 # ---------------------------------------------------------------------------
 # État global
@@ -37,6 +42,7 @@ _scheduler_thread: threading.Thread | None = None
 # ---------------------------------------------------------------------------
 
 CONFIG_FILE = Path("config.json")
+DEFAULT_CITY_NAMES = [c["name"] for c in CITIES_DEFAULT]
 DEFAULT_CONFIG = {
     "lastname": "",
     "firstname": "",
@@ -51,7 +57,7 @@ DEFAULT_CONFIG = {
         "Je suis motivé, curieux(se) et disponible pour un entretien à votre convenance.\n\n"
         "Cordialement,\n{firstname} {lastname}"
     ),
-    "selected_cities": ["Strasbourg", "Nantes", "Lyon", "Metz", "Nancy", "Marseille"],
+    "selected_cities": list(DEFAULT_CITY_NAMES),
     "job_searches": [
         {
             "name": "Développement web, intégration",
@@ -63,10 +69,18 @@ DEFAULT_CONFIG = {
 }
 
 
+def _normalize_cities(cfg: dict) -> None:
+    valid = {c["name"] for c in CITIES_DEFAULT}
+    sel = cfg.get("selected_cities") or []
+    cfg["selected_cities"] = [n for n in sel if n in valid] or list(DEFAULT_CITY_NAMES)
+
+
 def get_config() -> dict:
     if CONFIG_FILE.exists():
         try:
-            return json.loads(CONFIG_FILE.read_text(encoding="utf-8"))
+            cfg = json.loads(CONFIG_FILE.read_text(encoding="utf-8"))
+            _normalize_cities(cfg)
+            return cfg
         except Exception:
             pass
     return DEFAULT_CONFIG.copy()
@@ -101,7 +115,7 @@ def update_status(stats: dict) -> None:
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html", cities=DEFAULT_CITY_NAMES)
 
 
 @app.get("/api/config")
@@ -111,8 +125,37 @@ def api_get_config():
 
 @app.post("/api/config")
 def api_save_config():
-    save_config(request.get_json(force=True))
+    cfg = request.get_json(silent=True)
+    if not isinstance(cfg, dict):
+        return jsonify({"error": "JSON invalide"}), 400
+    _normalize_cities(cfg)
+    save_config(cfg)
     return jsonify({"ok": True})
+
+
+@app.post("/api/upload/cv")
+def api_upload_cv():
+    """Enregistre un CV PDF depuis le navigateur et met à jour cv_path dans la config."""
+    if "file" not in request.files:
+        return jsonify({"error": "Aucun fichier reçu"}), 400
+    f = request.files["file"]
+    if not f or not f.filename:
+        return jsonify({"error": "Aucun fichier sélectionné"}), 400
+    if not f.filename.lower().endswith(".pdf"):
+        return jsonify({"error": "Seuls les fichiers PDF sont acceptés"}), 400
+
+    head = f.read(5)
+    if head != b"%PDF-":
+        return jsonify({"error": "Le fichier ne semble pas être un PDF valide"}), 400
+    f.seek(0)
+
+    UPLOADS_DIR.mkdir(parents=True, exist_ok=True)
+    dest = (UPLOADS_DIR / "cv.pdf").resolve()
+    f.save(dest)
+    cfg = get_config()
+    cfg["cv_path"] = str(dest)
+    save_config(cfg)
+    return jsonify({"ok": True, "cv_path": cfg["cv_path"], "original_name": f.filename})
 
 
 @app.post("/api/start")
@@ -122,7 +165,10 @@ def api_start():
     if current_status.get("status") == "running":
         return jsonify({"error": "Automation déjà en cours"}), 400
 
-    cfg = request.get_json(force=True) or get_config()
+    cfg = request.get_json(silent=True) or get_config()
+    if not isinstance(cfg, dict):
+        cfg = get_config()
+    _normalize_cities(cfg)
     save_config(cfg)
 
     # Flush logs
@@ -208,7 +254,7 @@ def api_sent():
 @app.post("/api/schedule_midnight")
 def api_schedule_midnight():
     """Programme un redémarrage automatique à 00:00 demain."""
-    global _scheduler_thread
+    global _scheduler_thread, stop_event
 
     now = datetime.now()
     tomorrow = (now + timedelta(days=1)).replace(
@@ -217,6 +263,7 @@ def api_schedule_midnight():
     delay = (tomorrow - now).total_seconds()
 
     def _wait_and_start():
+        global stop_event
         add_log({
             "time": datetime.now().strftime("%H:%M:%S"),
             "message": f"⏰ Reprise programmée à {tomorrow.strftime('%Y-%m-%d 00:00:05')}",
@@ -231,7 +278,7 @@ def api_schedule_midnight():
         # Déclencher le démarrage via une requête interne
         with app.test_request_context():
             cfg = get_config()
-        stop_event_local = threading.Event()
+        stop_event = threading.Event()
 
         def _inner_run():
             from automation import LBAAutomation
@@ -240,7 +287,7 @@ def api_schedule_midnight():
             asyncio.set_event_loop(loop)
             auto = LBAAutomation(
                 config=cfg,
-                stop_event=stop_event_local,
+                stop_event=stop_event,
                 callbacks={"log": add_log, "status": update_status},
             )
             try:

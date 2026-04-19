@@ -125,7 +125,9 @@ def api_get_config():
 
 @app.post("/api/config")
 def api_save_config():
-    cfg = request.get_json(force=True)
+    cfg = request.get_json(silent=True)
+    if not isinstance(cfg, dict):
+        return jsonify({"error": "JSON invalide"}), 400
     _normalize_cities(cfg)
     save_config(cfg)
     return jsonify({"ok": True})
@@ -163,7 +165,9 @@ def api_start():
     if current_status.get("status") == "running":
         return jsonify({"error": "Automation déjà en cours"}), 400
 
-    cfg = request.get_json(force=True) or get_config()
+    cfg = request.get_json(silent=True) or get_config()
+    if not isinstance(cfg, dict):
+        cfg = get_config()
     _normalize_cities(cfg)
     save_config(cfg)
 
@@ -250,7 +254,7 @@ def api_sent():
 @app.post("/api/schedule_midnight")
 def api_schedule_midnight():
     """Programme un redémarrage automatique à 00:00 demain."""
-    global _scheduler_thread
+    global _scheduler_thread, stop_event
 
     now = datetime.now()
     tomorrow = (now + timedelta(days=1)).replace(
@@ -259,6 +263,7 @@ def api_schedule_midnight():
     delay = (tomorrow - now).total_seconds()
 
     def _wait_and_start():
+        global stop_event
         add_log({
             "time": datetime.now().strftime("%H:%M:%S"),
             "message": f"⏰ Reprise programmée à {tomorrow.strftime('%Y-%m-%d 00:00:05')}",
@@ -273,7 +278,7 @@ def api_schedule_midnight():
         # Déclencher le démarrage via une requête interne
         with app.test_request_context():
             cfg = get_config()
-        stop_event_local = threading.Event()
+        stop_event = threading.Event()
 
         def _inner_run():
             from automation import LBAAutomation
@@ -282,7 +287,7 @@ def api_schedule_midnight():
             asyncio.set_event_loop(loop)
             auto = LBAAutomation(
                 config=cfg,
-                stop_event=stop_event_local,
+                stop_event=stop_event,
                 callbacks={"log": add_log, "status": update_status},
             )
             try:

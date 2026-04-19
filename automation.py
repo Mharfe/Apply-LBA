@@ -14,7 +14,7 @@ from urllib.parse import quote
 BASE_URL = "https://labonnealternance.apprentissage.beta.gouv.fr"
 
 CITIES_DEFAULT = [
-    {"name": "Clermont-Ferrand", "address": "Clermont-Ferrand 63000", "lat": 45.7772, "lon": 3.0870},
+    # {"name": "Clermont-Ferrand", "address": "Clermont-Ferrand 63000", "lat": 45.7772, "lon": 3.0870},
 
     # Priority 1 - Best opportunity + acceptable travel time
     {"name": "Paris",            "address": "Paris 75000",            "lat": 48.8566, "lon": 2.3522},
@@ -128,7 +128,11 @@ class LBAAutomation:
         headless = self.config.get("headless", False)
         delay = int(self.config.get("delay_between_applications", 3))
 
-        cities = CITIES_DEFAULT
+        city_by_name = {c["name"]: c for c in CITIES_DEFAULT}
+        selected_city_names = self.config.get("selected_cities") or []
+        cities = [city_by_name[name] for name in selected_city_names if name in city_by_name]
+        if not cities:
+            cities = CITIES_DEFAULT
         jobs = self.config.get("job_searches", JOB_SEARCHES_DEFAULT)
 
         async with async_playwright() as p:
@@ -357,11 +361,21 @@ class LBAAutomation:
             await asyncio.sleep(2)
 
             # ── 7. Attendre qu'au moins une carte apparaisse ─────────────
-            try:
-                await page.wait_for_selector(".fr-card", timeout=20_000)
-            except PwTimeout:
-                self._log(f"  ⚠️  Aucune carte de résultat: {city['name']}", "warning")
-                return page, []
+            # Attente potentiellement illimitée: on ne quitte pas tant qu'aucune
+            # offre n'est visible, sauf si l'utilisateur demande l'arrêt.
+            self._log("  ⏳ Attente des offres (sans limite de temps)…")
+            while True:
+                if self._stopped():
+                    self._log("  🛑 Arrêt demandé pendant l'attente des offres", "warning")
+                    return page, []
+                try:
+                    await page.wait_for_selector(".fr-card", timeout=15_000)
+                    break
+                except PwTimeout:
+                    self._log(
+                        f"  ⏳ Toujours en attente des offres pour {city['name']}…",
+                        "info",
+                    )
 
             # ── 8–9. Scroll + collecte incrémentale ─────────────────────────
             # LBA utilise une liste virtualisée : le DOM ne contient qu’environ
